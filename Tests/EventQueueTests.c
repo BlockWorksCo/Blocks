@@ -9,6 +9,8 @@
 #include "EventQueue.h"
 #include "BlockedEvents.h"
 #include "PredicatedEvents.h"
+#include "TimedEvents.h"
+#include "KeyValueStore.h"
 
 
 
@@ -24,30 +26,6 @@ void OneShot()
     printf("One shot.\n");
 }
 
-void TransferComplete()
-{
-    printf("TransferComplete\n");
-}
-
-void Tock()
-{
-    printf("Tock.\n");
-
-    static uint8_t  in[8];
-    static uint8_t  out[8];
-
-    PerformTransfer( &in[0], &out[0], 8, TransferComplete );
-}
-
-void Tick()
-{
-    static uint32_t    i = 0;
-    printf("Tick(%d).\n",i);
-    i++;
-
-    CallAfter_ms( Tock, 250 );
-    seconds++;
-}
 
 
 bool trigger    = false;
@@ -61,6 +39,23 @@ void PullTheTrigger()
 void Bang()
 {
     printf("Bang!\n");
+}
+
+
+
+void Tock()
+{
+    printf("Tock.\n");
+}
+
+void Tick()
+{
+    static uint32_t    i = 0;
+    printf("Tick(%d).\n",i);
+    i++;
+
+    CallAfter_ms( Tock, 250 );
+    seconds++;
 }
 
 

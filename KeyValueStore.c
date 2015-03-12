@@ -7,12 +7,7 @@
 
 
 #include <stddef.h>
-
-
-#define DECLARE_KEY_VALUE_STORAGE( type, name )     type name##Storage
-#define DECLARE_KEY( name )                         name = offsetof( KeyValueData, name##Storage )
-#define SET_KEY_VALUE( key, value )                 keyValueData.key##Storage = value;KeyValueStoreWritten(key)
-#define GET_KEY_VALUE( key )                        keyValueData.key##Storage 
+#include "KeyValueStore.h"
 
 KeyValueData keyValueData;
 

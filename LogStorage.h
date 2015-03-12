@@ -13,6 +13,8 @@
 #define __LOGSTORAGE_H__
 
 
+#include "Platform.h"
+
 void WriteLog( uint8_t* data, Handler completionHandler );
 void ReadLog( uint8_t* data, Handler completionHandler );
 

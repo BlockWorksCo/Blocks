@@ -10,7 +10,7 @@
 #ifndef __KEYALUESTORE_H__
 #define __KEYALUESTORE_H__
 
-
+#include "Platform.h"
 
 
 #define DECLARE_KEY_VALUE_STORAGE( type, name )     type name##Storage
@@ -40,9 +40,9 @@ typedef enum
 
 } Key;
 
+extern KeyValueData keyValueData;
 
-
-
+void KeyValueStoreWritten( uint32_t key );
 
 
 #endif

@@ -10,6 +10,7 @@
 
 
 #include "Queue.h"
+#include "EventQueue.h"
 
 DECLARE_QUEUE( HandlerQueue, Handler, 16);
 

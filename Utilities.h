@@ -1,3 +1,4 @@
+#include "EventQueue.h"
 //
 // Copyright (C) BlockWorks Consulting Ltd - All Rights Reserved.
 // Unauthorized copying of this file, via any medium is strictly prohibited.
@@ -13,6 +14,7 @@
 #ifndef __UTILITIES_H__
 #define __UTILITIES_H__
 
+#include "EventQueue.h"
 
 
 void PANIC();

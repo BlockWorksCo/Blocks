@@ -5,6 +5,9 @@
 // Written by Steve Tickle <Steve@BlockWorks.co>, September 2014.
 //
 
+
+#include "LogStorage.h"
+
 #define LOG_ENTRY_SIZE      (128)
 #define LOG_FILE_NUMBER     (1)
 

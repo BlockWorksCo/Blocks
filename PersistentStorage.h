@@ -11,6 +11,10 @@
 #ifndef __PERSISTENTSTORAGE_H__
 #define __PERSISTENTSTORAGE_H__
 
+#include "Platform.h"
+#include "EventQueue.h"
+
+
 void WriteBlock( uint32_t address, uint8_t* data, uint32_t numberOfBytes, Handler completionHandler );
 void ReadBlock( uint32_t address, uint8_t* data, uint32_t numberOfBytes, Handler completionHandler );
 void EraseBlock( uint32_t address, Handler completionHandler );

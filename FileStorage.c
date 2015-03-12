@@ -7,6 +7,8 @@
 
 
 
+#include "FileStorage.h"
+
 
 uint32_t fileMap[]  =
 {

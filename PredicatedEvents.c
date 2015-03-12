@@ -9,6 +9,8 @@
 
 
 #include "Utilities.h"
+#include "PredicatedEvents.h"
+
 
 struct
 {

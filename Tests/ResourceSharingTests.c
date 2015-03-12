@@ -61,3 +61,49 @@ void PerformTransfer( uint8_t* dataIn, uint8_t* dataOut, uint8_t numberOfBytesTo
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void TransferComplete()
+{
+    printf("TransferComplete\n");
+}
+
+void Tock()
+{
+    printf("Tock.\n");
+
+    static uint8_t  in[8];
+    static uint8_t  out[8];
+
+    PerformTransfer( &in[0], &out[0], 8, TransferComplete );
+}
+
+void Tick()
+{
+    static uint32_t    i = 0;
+    printf("Tick(%d).\n",i);
+    i++;
+
+    CallAfter_ms( Tock, 250 );
+    seconds++;
+}

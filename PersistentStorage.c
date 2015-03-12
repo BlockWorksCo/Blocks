@@ -9,6 +9,8 @@
 
 
 #include <string.h>
+#include "PersistentStorage.h"
+
 
 #define BLOCK_SIZE          (1024)
 #define NUMBER_OF_BLOCKS    (128)
