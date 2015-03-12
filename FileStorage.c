@@ -8,7 +8,7 @@
 
 
 #include "FileStorage.h"
-
+#include "PersistentStorage.h"
 
 uint32_t fileMap[]  =
 {

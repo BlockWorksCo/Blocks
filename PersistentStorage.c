@@ -12,8 +12,6 @@
 #include "PersistentStorage.h"
 
 
-#define BLOCK_SIZE          (1024)
-#define NUMBER_OF_BLOCKS    (128)
 
 
 uint8_t     simulatedFLASH[BLOCK_SIZE*NUMBER_OF_BLOCKS];

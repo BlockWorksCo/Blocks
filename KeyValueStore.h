@@ -18,7 +18,7 @@
 #define SET_KEY_VALUE( key, value )                 keyValueData.key##Storage = value;KeyValueStoreWritten(key)
 #define GET_KEY_VALUE( key )                        keyValueData.key##Storage 
 
-struct
+typedef struct
 {
     DECLARE_KEY_VALUE_STORAGE( uint32_t, Value1 );
     DECLARE_KEY_VALUE_STORAGE( uint32_t, Value2 );
@@ -27,6 +27,9 @@ struct
     DECLARE_KEY_VALUE_STORAGE( uint32_t, Value5 );
 
 } KeyValueData;
+
+
+extern KeyValueData keyValueData;
 
 typedef enum
 {
@@ -40,7 +43,6 @@ typedef enum
 
 } Key;
 
-extern KeyValueData keyValueData;
 
 void KeyValueStoreWritten( uint32_t key );
 

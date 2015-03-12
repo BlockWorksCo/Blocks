@@ -8,7 +8,8 @@
 
 
 
-
+#include "Platform.h"
+#include "Utilities.h"
 #include "Queue.h"
 #include "EventQueue.h"
 

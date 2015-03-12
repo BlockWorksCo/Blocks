@@ -12,6 +12,9 @@
 #define __FILESTORAGE_H__
 
 
+#include "Platform.h"
+#include "EventQueue.h"
+
 void WriteFileBlock( uint8_t fileNumber, uint32_t address, uint8_t* data, uint32_t numberOfBytes, Handler completionHandler );
 void ReadFileBlock( uint8_t fileNumber, uint32_t address, uint8_t* data, uint32_t numberOfBytes, Handler completionHandler );
 void EraseFileBlock( uint8_t fileNumber, uint32_t address, Handler completionHandler );

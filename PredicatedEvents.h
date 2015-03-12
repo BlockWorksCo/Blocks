@@ -9,8 +9,8 @@
 
 
 
-#ifndef __LOGSTORAGE_H__
-#define __LOGSTORAGE_H__
+#ifndef __PREDICATEDEVENTS_H__
+#define __PREDICATEDEVENTS_H__
 
 #include "Platform.h"
 #include "EventQueue.h"
