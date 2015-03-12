@@ -10,18 +10,15 @@
 
 
 
-#ifndef __TIMEDEVENTS_H__
-#define __TIMEDEVENTS_H__
+#ifndef __EVENTQUEUE_H__
+#define __EVENTQUEUE_H__
 
 
+typedef void (*Handler)();
 
-#include "EventQueue.h"
 
-
-void CallEvery_ms( Handler handler, uint32_t interval );
-void CallAfter_ms( Handler handler, uint32_t interval );
-void CheckTimedEventHandlers();
-
+void Call( Handler handler );
+void DispatchHandlers();
 
 #endif
 

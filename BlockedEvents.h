@@ -13,6 +13,9 @@
 #ifndef __BLOCKEDEVENTS_H__
 #define __BLOCKEDEVENTS_H__
 
+#include "EventQueue.h"
+
+
 void CallWhenUnblocked( Handler handler, bool* blockingFlag );
 void CheckBlockedEventHandlers();
 

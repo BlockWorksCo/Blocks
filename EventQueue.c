@@ -11,9 +11,6 @@
 
 #include "Queue.h"
 
-typedef void (*Handler)();
-
-
 DECLARE_QUEUE( HandlerQueue, Handler, 16);
 
 

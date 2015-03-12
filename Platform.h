@@ -10,17 +10,10 @@
 
 
 
-#ifndef __TIMEDEVENTS_H__
-#define __TIMEDEVENTS_H__
+#ifndef __PLATFORM_H__
+#define __PLATFORM_H__
 
 
-
-#include "EventQueue.h"
-
-
-void CallEvery_ms( Handler handler, uint32_t interval );
-void CallAfter_ms( Handler handler, uint32_t interval );
-void CheckTimedEventHandlers();
 
 
 #endif

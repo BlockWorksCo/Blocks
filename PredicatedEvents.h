@@ -13,6 +13,9 @@
 #define __LOGSTORAGE_H__
 
 
+#include "EventQueue.h"
+
+
 void CallWhenPredicateIsTrue( Handler handler, bool (*predicate)() );
 void CheckPredicatedEventHandlers();
 
