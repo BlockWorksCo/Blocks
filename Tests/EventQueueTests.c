@@ -11,6 +11,7 @@
 #include "PredicatedEvents.h"
 #include "TimedEvents.h"
 #include "KeyValueStore.h"
+#include "Platform.h"
 
 
 

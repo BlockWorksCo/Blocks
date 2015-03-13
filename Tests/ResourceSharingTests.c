@@ -1,5 +1,21 @@
+//
+// Copyright (C) BlockWorks Consulting Ltd - All Rights Reserved.
+// Unauthorized copying of this file, via any medium is strictly prohibited.
+// Proprietary and confidential.
+// Written by Steve Tickle <Steve@BlockWorks.co>, September 2014.
+//
 
-// ResourceSharingTest.c --------------------------------------------------------------------------------
+
+
+#include "EventQueue.h"
+#include "BlockedEvents.h"
+#include "PredicatedEvents.h"
+#include "TimedEvents.h"
+#include "KeyValueStore.h"
+#include "Queue.h"
+#include "Platform.h"
+#include "Utilities.h"
+
 
 
 typedef struct
@@ -24,6 +40,13 @@ TransferRequest     nullRequest =
 };
 
 void TransferFinished();
+
+
+
+
+
+
+
 
 void PollRequestQueue()
 {
@@ -81,7 +104,7 @@ void PerformTransfer( uint8_t* dataIn, uint8_t* dataOut, uint8_t numberOfBytesTo
 
 
 
-
+uint32_t    seconds     = 0;
 
 void TransferComplete()
 {
@@ -107,3 +130,21 @@ void Tick()
     CallAfter_ms( Tock, 250 );
     seconds++;
 }
+
+
+
+
+int main()
+{
+    CallEvery_ms( Tick, 500 );
+
+    while(true)
+    {
+        CheckTimedEventHandlers();
+        CheckBlockedEventHandlers();
+        CheckPredicatedEventHandlers();
+        DispatchHandlers();
+    }
+}
+
+
