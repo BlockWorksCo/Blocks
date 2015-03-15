@@ -12,19 +12,19 @@
 #include "TimedEvents.h"
 #include "KeyValueStore.h"
 #include "Platform.h"
-
+#include "Utilities.h"
 
 
 uint32_t    seconds     = 0;
 
 void HelloWorld()
 {
-    printf("Hello World.\n");
+    DPRINTF("Hello World.\n");
 }
 
 void OneShot()
 {
-    printf("One shot.\n");
+    DPRINTF("One shot.\n");
 }
 
 
@@ -34,25 +34,25 @@ bool trigger    = false;
 void PullTheTrigger()
 {
     trigger     = true;
-    printf("pulled the trigger...\n");
+    DPRINTF("pulled the trigger...\n");
 }
 
 void Bang()
 {
-    printf("Bang!\n");
+    DPRINTF("Bang!\n");
 }
 
 
 
 void Tock()
 {
-    printf("Tock.\n");
+    DPRINTF("Tock.\n");
 }
 
 void Tick()
 {
     static uint32_t    i = 0;
-    printf("Tick(%d).\n",i);
+    DPRINTF("Tick(%d).\n",i);
     i++;
 
     CallAfter_ms( Tock, 250 );
@@ -75,7 +75,7 @@ bool TenSecondsHavePassed()
 
 void BigTick()
 {
-    printf("*** big tick ***\n");
+    DPRINTF("*** big tick ***\n");
 }
 
 int main()

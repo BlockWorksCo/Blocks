@@ -62,7 +62,7 @@ void PollRequestQueue()
 
 void TransferFinished()
 {
-    printf("<TransferFinished>\n");
+    DPRINTF("<TransferFinished>\n");
     Call( currentRequest.completionHandler );
 
     PollRequestQueue();

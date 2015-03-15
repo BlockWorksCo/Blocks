@@ -21,6 +21,8 @@
 
 #define PRIVATE                 static
 
+#define DPRINTF(format, ...)    printf(format, ##__VA_ARGS__)
+
 void PANIC();
 
 uint32_t CurrentTimestamp_ms();
