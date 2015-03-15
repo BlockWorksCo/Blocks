@@ -11,6 +11,7 @@
 #include "I2CMaster.h"
 #include "Platform.h"
 #include "Utilities.h"
+#include "EventQueue.h"
 
 
 
@@ -93,7 +94,7 @@ uint8_t         acksForBytes[maxBytesToTransmit]    = {0};
 uint8_t         numberOfBytesToTranfer              = 0;
 uint8_t         state                               = 0;
 bool            transferFinished                    = true;
-void            (*completionCallback)()             = 0;
+Handler         completionEvent                     = 0;
 uint8_t*        bytes                               = 0;
 
 
@@ -102,9 +103,9 @@ uint8_t*        bytes                               = 0;
 //
 //
 //
-void Write(uint8_t* _bytes, uint8_t _numberOfBytes, void (*_completionCallback)() )
+void Write(uint8_t* _bytes, uint8_t _numberOfBytes, Handler _completionCallback )
 {
-    completionCallback  = _completionCallback;
+    completionEvent     = _completionCallback;
     masterState         = Transmitting;
     state               = 0;
 
@@ -115,9 +116,9 @@ void Write(uint8_t* _bytes, uint8_t _numberOfBytes, void (*_completionCallback)(
 //
 //
 //
-void Read( void (*_byteReceivedCallback)() , void (*_completionCallback)() )
+void Read( void (*_byteReceivedCallback)() , Handler _completionCallback )
 {
-    completionCallback  = _completionCallback;        
+    completionEvent     = _completionCallback;        
     masterState         = Receiving;
     state               = 0;
 
@@ -127,9 +128,9 @@ void Read( void (*_byteReceivedCallback)() , void (*_completionCallback)() )
 //
 //
 //
-void Stop( void (*_completionCallback)() )
+void Stop( Handler _completionCallback )
 {
-    completionCallback  = _completionCallback;        
+    completionEvent     = _completionCallback;        
     masterState         = Stopping;
     state               = 0;
 }
@@ -225,10 +226,7 @@ void WriteEngine()
     }
     else
     {
-        if( completionCallback != 0 )
-        {
-            completionCallback();
-        }
+        Call( completionEvent );
         masterState     = Idle;
     }
 
@@ -310,10 +308,7 @@ void ReadEngine()
     }
     else
     {
-        if( completionCallback != 0 )
-        {
-            completionCallback();
-        }
+        Call( completionEvent );
         masterState     = Idle;
     }
 
@@ -363,10 +358,7 @@ void StopEngine()
         SET_SCL();
         transferFinished = true;
 
-        if( completionCallback != 0 )
-        {
-            completionCallback();
-        }
+        Call( completionEvent );
         masterState     = Idle;
     }
 
