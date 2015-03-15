@@ -99,13 +99,12 @@ uint8_t*        bytes                               = 0;
 
 
 
-
 //
 //
 //
-void Write(uint8_t* _bytes, uint8_t _numberOfBytes, Handler _completionCallback )
+void Write(uint8_t* _bytes, uint8_t _numberOfBytes, Handler _completionEvent )
 {
-    completionEvent     = _completionCallback;
+    completionEvent     = _completionEvent;
     masterState         = Transmitting;
     state               = 0;
 
@@ -116,9 +115,9 @@ void Write(uint8_t* _bytes, uint8_t _numberOfBytes, Handler _completionCallback 
 //
 //
 //
-void Read( void (*_byteReceivedCallback)() , Handler _completionCallback )
+void Read( void (*_byteReceivedCallback)() , Handler _completionEvent )
 {
-    completionEvent     = _completionCallback;        
+    completionEvent     = _completionEvent;        
     masterState         = Receiving;
     state               = 0;
 
@@ -128,9 +127,9 @@ void Read( void (*_byteReceivedCallback)() , Handler _completionCallback )
 //
 //
 //
-void Stop( Handler _completionCallback )
+void Stop( Handler _completionEvent )
 {
-    completionEvent     = _completionCallback;        
+    completionEvent     = _completionEvent;        
     masterState         = Stopping;
     state               = 0;
 }
