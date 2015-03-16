@@ -23,6 +23,8 @@
 
 #define DPRINTF(format, ...)    printf(format, ##__VA_ARGS__)
 
+#define DBG                     printf("%s:%d\n",__FILE__,__LINE__)
+
 void PANIC();
 
 uint32_t CurrentTimestamp_ms();

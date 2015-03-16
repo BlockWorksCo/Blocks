@@ -192,7 +192,7 @@ void WriteEngine()
     else if( state < (numberOfBytesToTranfer*numberOfStatesPerByte)+numberOfStartStates )
     {
         uint8_t             byteIndex   = (state-3)/(2*9);
-        uint8_t             byte        = dataToTransmit[ byteIndex ];
+        uint8_t             byte        = bytes[ byteIndex ];
         volatile uint8_t    bitInByte   = (state - ((byteIndex*numberOfStatesPerByte) + numberOfStartStates)) / 2;
 
         //
@@ -201,14 +201,16 @@ void WriteEngine()
         if( (state%2) != 0)
         {
             CLEAR_SCL();        // bring clock down before setting new data.
-
             if(bitInByte == 8)
             {
                 FLOAT_SDA();
             }
             else
             {
+                DRIVE_SDA();
+                
                 volatile uint8_t bitValue = byte&(0x80>>bitInByte);
+DPRINTF("                        bn=%d byte=%02x\n",bitInByte,byte);                
                 if( bitValue != 0 )
                 {
                     SET_SDA();
@@ -395,6 +397,10 @@ void I2CDisplay()
         {
             sdaText     = "   |";
         }
+        if(sdaDriven == false)
+        {
+            sdaText     = "XXXX";
+        }
 
         uint8_t*    sclText;
         if(scl == true)
@@ -418,7 +424,7 @@ void I2CDisplay()
             sclText     = "----";
         } 
 
-        DPRINTF(" %6s %6s \n",sclText, sdaText);
+        DPRINTF("%03d) %6s %6s \n",state, sclText, sdaText);
         sdaOld = sda;
         sclOld = scl;
     }    

@@ -34,11 +34,16 @@ void Tick()
 
 
 
-int8_t  data[] = {0,1,2};
+int8_t  data[] = {0xff,0xa5,0x81};
+
+void StopComplete()
+{
+    DPRINTF("Write Complete.\n");    
+}
 
 void WriteComplete()
 {
-    DPRINTF("Write Complete.\n");
+    Stop( StopComplete );
 }
 
 
