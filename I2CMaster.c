@@ -388,7 +388,7 @@ void StopEngine()
 //
 //
 //
-void ISR()
+void i2cISR()
 {
     switch( masterState )
     {

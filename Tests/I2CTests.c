@@ -34,10 +34,20 @@ void Tick()
 
 
 
+int8_t  data[] = {0,1,2};
+
+void WriteComplete()
+{
+    DPRINTF("Write Complete.\n");
+}
+
 
 int main()
 {
     CallEvery_ms( Tick, 500 );
+
+    Write( &data[0], NUMBER_OF_ELEMENTS(data), WriteComplete );
+    CallEvery_ms( i2cISR, 1 );
 
     while(true)
     {
