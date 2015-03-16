@@ -23,36 +23,43 @@ bool            scl                                 = false;
 
 void SET_SDA()
 {
+    DPRINTF("SET_SDA\n");
     sda = true;
 }
 
 void CLEAR_SDA()
 {
+    DPRINTF("CLEAR_SDA\n");
     sda = false;
 }
 
 void DRIVE_SDA()
 {
+    DPRINTF("DRIVE_SDA\n");
     sdaDriven = true;
 }
 
 void FLOAT_SDA()
 {
+    DPRINTF("FLOAT_SDA\n");
     sdaDriven = false;
 }
 
 bool GET_SDA()
 {
+    DPRINTF("GET_SDA\n");
     return sda;
 }
 
 void SET_SCL()
 {
+    DPRINTF("SET_SCL\n");
     scl = true;
 }
 
 void CLEAR_SCL()
 {
+    DPRINTF("CLEAR_SCL\n");
     scl = false;
 }
 
