@@ -23,43 +23,43 @@ bool            scl                                 = false;
 
 void SET_SDA()
 {
-    DPRINTF("SET_SDA\n");
+    //DPRINTF("SET_SDA\n");
     sda = true;
 }
 
 void CLEAR_SDA()
 {
-    DPRINTF("CLEAR_SDA\n");
+    //DPRINTF("CLEAR_SDA\n");
     sda = false;
 }
 
 void DRIVE_SDA()
 {
-    DPRINTF("DRIVE_SDA\n");
+    //DPRINTF("DRIVE_SDA\n");
     sdaDriven = true;
 }
 
 void FLOAT_SDA()
 {
-    DPRINTF("FLOAT_SDA\n");
+    //DPRINTF("FLOAT_SDA\n");
     sdaDriven = false;
 }
 
 bool GET_SDA()
 {
-    DPRINTF("GET_SDA\n");
+    //DPRINTF("GET_SDA\n");
     return sda;
 }
 
 void SET_SCL()
 {
-    DPRINTF("SET_SCL\n");
+    //DPRINTF("SET_SCL\n");
     scl = true;
 }
 
 void CLEAR_SCL()
 {
-    DPRINTF("CLEAR_SCL\n");
+    //DPRINTF("CLEAR_SCL\n");
     scl = false;
 }
 
@@ -381,7 +381,48 @@ void StopEngine()
 
 
 
+void I2CDisplay()
+{
 
+    if(masterState != Idle)
+    {
+        uint8_t*    sdaText;
+        if(sda == true)
+        {
+            sdaText     = "|   ";
+        }
+        else
+        {
+            sdaText     = "   |";
+        }
+
+        uint8_t*    sclText;
+        if(scl == true)
+        {
+            sclText     = "|   ";
+        }
+        else
+        {
+            sclText     = "   |";
+        }
+    
+        static bool sdaOld  = false;
+        static bool sclOld  = false;
+        if(sdaOld != sda)
+        {
+            sdaText     = "----";
+        } 
+
+        if(sclOld != scl)
+        {
+            sclText     = "----";
+        } 
+
+        DPRINTF(" %6s %6s \n",sclText, sdaText);
+        sdaOld = sda;
+        sclOld = scl;
+    }    
+}
 
 
 
@@ -411,6 +452,7 @@ void i2cISR()
             PANIC();
             break;
     }
+
 }
 
 

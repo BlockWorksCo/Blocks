@@ -24,7 +24,7 @@ void Stop( Handler _completionEvent );
 
 
 
-
+void I2CDisplay();
 
 #endif
 

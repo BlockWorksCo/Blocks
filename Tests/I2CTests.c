@@ -44,10 +44,11 @@ void WriteComplete()
 
 int main()
 {
-    CallEvery_ms( Tick, 500 );
+    CallEvery_ms( Tick, 1000 );
 
     Write( &data[0], NUMBER_OF_ELEMENTS(data), WriteComplete );
-    CallEvery_ms( i2cISR, 1 );
+    CallEvery_ms( I2CDisplay, 1 );
+    CallEvery_ms( i2cISR, 4 );
 
     while(true)
     {
