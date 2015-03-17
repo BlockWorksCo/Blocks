@@ -43,7 +43,7 @@ void ReadStopComplete()
 bool byteReceived(uint8_t value)
 {
     DPRINTF("<---- %02x\n",value);
-    return false;
+    return true;
 }
 
 void ReadComplete()

@@ -296,6 +296,13 @@ void ReadEngine()
         if( (state%2) != 0)
         {
             CLEAR_SCL();        // bring clock down before setting new data.
+        }
+        else
+        {
+            SET_SCL();
+            FLOAT_SDA();
+
+            // TODO: Wait a bit to settle....
 
             if(bitInByte == 8)
             {
@@ -309,19 +316,15 @@ void ReadEngine()
                     DRIVE_SDA();
                 }
             }
-        }
-        else
-        {
-            SET_SCL();
-            FLOAT_SDA();
-
-            // TODO: Wait a bit to settle....
-
-            bool bit = GET_SDA();
-            if(bit == true)
+            else
             {
-                bit     |= (1<<bitInByte);
+                bool bit = GET_SDA();
+                if(bit == true)
+                {
+                    bit     |= (1<<bitInByte);
+                }            
             }
+
         }
     }
     else
