@@ -34,11 +34,35 @@ void Tick()
 
 
 
+
+void ReadStopComplete()
+{
+    DPRINTF("Read Complete.\n");    
+}
+
+bool byteReceived(uint8_t value)
+{
+    DPRINTF("<---- %02x\n",value);
+    return false;
+}
+
+void ReadComplete()
+{
+    Stop( ReadStopComplete );    
+}
+
+void StartRead()
+{
+    DPRINTF("StartRead.\n");    
+    Read( byteReceived, 3, ReadComplete );
+}
+
 int8_t  data[] = {0xff,0xa5,0x81};
 
 void StopComplete()
 {
     DPRINTF("Write Complete.\n");    
+    CallAfter_ms(StartRead, 500);
 }
 
 void WriteComplete()

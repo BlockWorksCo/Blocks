@@ -19,7 +19,7 @@
 
 void i2cISR();
 void Write(uint8_t* _bytes, uint8_t _numberOfBytes, Handler _completionEvent );
-void Read( void (*_byteReceivedCallback)() , Handler _completionEvent );
+void Read( bool (*_byteReceivedCallback)(uint8_t), uint8_t _numberOfBytes , Handler _completionEvent );
 void Stop( Handler _completionEvent );
 
 

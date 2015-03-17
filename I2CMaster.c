@@ -103,7 +103,7 @@ uint8_t         state                               = 0;
 bool            transferFinished                    = true;
 Handler         completionEvent                     = 0;
 uint8_t*        bytes                               = 0;
-
+bool            (*byteReceivedCallback)(uint8_t);
 
 
 //
@@ -122,13 +122,14 @@ void Write(uint8_t* _bytes, uint8_t _numberOfBytes, Handler _completionEvent )
 //
 //
 //
-void Read( void (*_byteReceivedCallback)() , Handler _completionEvent )
+void Read( bool (*_byteReceivedCallback)(uint8_t), uint8_t _numberOfBytes , Handler _completionEvent )
 {
+    numberOfBytesToTranfer  = _numberOfBytes;
     completionEvent     = _completionEvent;        
     masterState         = Receiving;
     state               = 0;
 
-    numberOfBytesToTranfer  = 0;
+    byteReceivedCallback = _byteReceivedCallback;
 }
 
 //
@@ -208,7 +209,7 @@ void WriteEngine()
             else
             {
                 DRIVE_SDA();
-                
+
                 volatile uint8_t bitValue = byte&(0x80>>bitInByte);
 DPRINTF("                        bn=%d byte=%02x\n",bitInByte,byte);                
                 if( bitValue != 0 )
@@ -298,12 +299,21 @@ void ReadEngine()
 
             if(bitInByte == 8)
             {
-                CLEAR_SDA();   // ack.
+                DRIVE_SDA();
+                if(byteReceivedCallback( byte ) == true)
+                {
+                    CLEAR_SDA();
+                }
+                else
+                {
+                    DRIVE_SDA();
+                }
             }
         }
         else
         {
             SET_SCL();
+            FLOAT_SDA();
 
             // TODO: Wait a bit to settle....
 
