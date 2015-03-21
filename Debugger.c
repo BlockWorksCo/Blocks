@@ -11,12 +11,73 @@
 #include "Debugger.h"
 
 
-void debuggerISR()
+//
+//
+//
+typedef enum
 {
+    Identify,
+    MemoryRead,
+    MemoryWrite,
+    Restart,
+    Continue,
+    RegistersRead,
+    RegistersWrite,
 
+} DebuggerCommand;
+
+
+
+//
+//
+//
+DebuggerCommand GetCommand()
+{
+    return Continue;
 }
 
 
+
+//
+// Only return on a "Continue" command.
+//
+void debugger()
+{
+    bool        continueFlag    = false;
+
+    //
+    //
+    //
+    while( continueFlag == false )
+    {
+        DebuggerCommand     command     = GetCommand();
+
+        switch(command)
+        {
+            case MemoryRead:
+                break;
+
+            case MemoryWrite:
+                break;
+
+            case Restart:
+                break;
+
+            case Continue:
+                continueFlag    = true;
+                break;
+
+            case RegistersRead:
+                break;
+
+            case RegistersWrite:
+                break;
+
+            default:
+                break;
+        }
+    }
+}
 
 
 

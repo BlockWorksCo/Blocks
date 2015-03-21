@@ -6,21 +6,22 @@
 //
 
 
-#ifndef __DEBUGGER_H__
-#define __DEBUGGER_H__
+#include "UARTReceiver.h"
 
 
-#include "Platform.h"
+void uartRxISR()
+{
 
-#define BREAKPOINT()  debugger()
+}
 
 
 
+uint8_t UARTReceiveByte()
+{
 
+}
 
 #endif
-
-
 
 
 
