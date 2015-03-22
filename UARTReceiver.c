@@ -21,8 +21,5 @@ uint8_t UARTReceiveByte()
 
 }
 
-#endif
-
-
 
 

@@ -23,6 +23,8 @@ typedef enum
     Continue,
     RegistersRead,
     RegistersWrite,
+    NonVolatileWrite,
+    NonVolatileRead,
 
 } DebuggerCommand;
 
@@ -33,7 +35,10 @@ typedef enum
 //
 DebuggerCommand GetCommand()
 {
-    return Continue;
+    uint8_t             byte        = UARTReceiveByte();
+    DebuggerCommand     command     = (DebuggerCommand)byte;
+
+    return command;
 }
 
 
@@ -71,6 +76,12 @@ void debugger()
                 break;
 
             case RegistersWrite:
+                break;
+
+            case NonVolatileWrite:
+                break;
+
+            case NonVolatileRead:
                 break;
 
             default:

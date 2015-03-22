@@ -5,21 +5,11 @@
 // Written by Steve Tickle <Steve@BlockWorks.co>, September 2014.
 //
 
-
-#ifndef __UARTRECEIVER_H__
-#define __UARTRECEIVER_H__
-
+#include "UARTTransmitter.h"
+#include "UARTReceiver.h"
 
 
-#include "Platform.h"
-#include "EventQueue.h"
+void main()
+{
 
-
-void uartRxISR();
-uint8_t UARTReceiveByte();
-
-#endif
-
-
-
-
+}

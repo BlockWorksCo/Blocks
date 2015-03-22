@@ -12,7 +12,7 @@
 
 
 #include "UARTTransmitter.h"
-
+#include "Utilities.h"
 
 
 PRIVATE uint8_t     byteToTransmit;
