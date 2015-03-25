@@ -9,16 +9,78 @@
 #include "UARTReceiver.h"
 
 
+
+bool rxState    = false;
+
+void SET_RX()
+{
+    rxState  = true;
+}
+
+void CLEAR_RX()
+{
+    rxState = false;
+}
+
+void FLOAT_RX()
+{
+    rxDriven    = false;
+}
+
+void DRIVE_RX()
+{
+    rxDriven = true;
+}
+
+
+
+
 void uartRxISR()
 {
+    if( state == 0 )
+    {
+        //
+        // Start bit.
+        //
+        FLOAT_RX();
+        CLEAR_TX();
+    }
+    else if( (state>=1) && (state<9) )
+    {
+        uint8_t     bitNumber = state-1;
 
+        //
+        // data bits
+        //
+        if( (byteToTransmit&(1<<bitNumber)) != 0)
+        {
+            SET_TX();
+        }
+        else
+        {
+            CLEAR_TX();
+        }
+    }
+    else if( state == 9 )
+    {
+        //
+        // Stop bit.
+        //
+        SET_TX();
+    }
+
+    state++;    
 }
 
 
 
 uint8_t UARTReceiveByte()
 {
-
+    state = 0;
+    while(state <= 9)
+    {
+        uartRxISR();
+    }
 }
 
 
