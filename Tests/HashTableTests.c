@@ -18,7 +18,7 @@ void Test1()
     HashTablePut( 789, 0x01234567 );
 
     AssertEqual( HashTableGet( 567, 0xffffffff ) == 0xabcd1234, "Key 567 value" );
-    AssertEqual( HashTableGet( 123, 0xffffffff ) == 0x1234abcd, "Key 123 value" );
+    AssertEqual( HashTableGet( 123, 0xffffffff ) == 0x1234abdd, "Key 123 value" );
     AssertEqual( HashTableGet( 789, 0xffffffff ) == 0x01234567, "Key 789 value" );
 }
 

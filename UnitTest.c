@@ -49,18 +49,13 @@ void AddTest( char* name, TestFunction fn )
 
 void AssertEqual( bool test, char* message )
 {
-    DPRINTF("\t\t<Assertion name=\"%s\">\r\n", message );
-    DPRINTF("\t\t\t<Result>\r\n");
     if( test == false )
     {
-        DPRINTF("\t\t\t\tFAIL\r\n");
+        DPRINTF("\t\t<failure name=\"%s\" classname=\"main\" time=\"1\">\r\n", message );
+            DPRINTF("\t\t\t<system-out></system-out>\r\n");
+            DPRINTF("\t\t\t<system-err></system-err>\r\n");
+        DPRINTF("\t\t</failure>\r\n");
     }
-    else
-    {
-        DPRINTF("\t\t\t\tPASS\r\n");
-    }
-    DPRINTF("\t\t\t</Result>\r\n");
-    DPRINTF("\t\t</Assertion>\r\n");
 }
 
 
@@ -69,17 +64,19 @@ void AssertEqual( bool test, char* message )
 //
 void RunTests( char* suiteName )
 {
-    DPRINTF("<TestSuite Name=\"%s\">\r\n", suiteName );
+    uint8_t     testCount   = 3;
+
+    DPRINTF("<testsuite tests=\"%d\" name=\"%s\">\r\n", testCount, suiteName );
     for(uint8_t i=0; i<NUMBER_OF_ELEMENTS(testTable); i++)
     {
         if(testTable[i].fn != 0)
         {
-            DPRINTF("\t<Test Name=\"%s\" >\n", testTable[i].name );
+            DPRINTF("\t<testcase name=\"%s\" >\n", testTable[i].name );
             testTable[i].fn();
-            DPRINTF("\t</Test>\r\n");
+            DPRINTF("\t</testcase>\r\n");
         }
     }
-    DPRINTF("</TestSuite>\r\n");
+    DPRINTF("</testsuite>\r\n");
 }
 
 
