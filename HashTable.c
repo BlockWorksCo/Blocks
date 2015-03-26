@@ -35,9 +35,13 @@ void HashTablePut( HashTableKey key, HashTableValue value )
         if( table[index][i].usedFlag == false )
         {
             table[index][i].usedFlag = true;
-            break;
+            table[index][i].key         = key;
+            table[index][i].value       = value;
+            return;
         }
     }
+
+    PANIC();
 }
 
 
@@ -50,7 +54,8 @@ HashTableValue HashTableGet( HashTableKey key, HashTableValue failValue )
 
     for(uint32_t i=0; i<HASH_TABLE_MAX_COLLISIONS; i++)
     {
-        if( (table[index][i].key == key) && (table[index][i].usedFlag == true) )
+        if( (table[index][i].key      == key ) && 
+            (table[index][i].usedFlag == true) )
         {
             return table[index][i].value;
         }
