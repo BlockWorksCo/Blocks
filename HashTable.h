@@ -23,7 +23,8 @@
 //
 //
 //
-typedef void  (*HashTableValue);
+//typedef void        (*HashTableValue);
+typedef uint32_t    HashTableValue;
 
 //
 //

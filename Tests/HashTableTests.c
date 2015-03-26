@@ -7,18 +7,26 @@
 
 #include "HashTable.h"
 #include "Utilities.h"
+#include "UnitTest.h"
 
+
+
+void Test1()
+{
+    HashTablePut( 123, 0x1234abcd );
+    HashTablePut( 567, 0xabcd1234 );
+    HashTablePut( 789, 0x01234567 );
+
+    AssertEqual( HashTableGet( 567, 0xffffffff ) == 0xabcd1234, "Key 567 value" );
+    AssertEqual( HashTableGet( 123, 0xffffffff ) == 0x1234abcd, "Key 123 value" );
+    AssertEqual( HashTableGet( 789, 0xffffffff ) == 0x01234567, "Key 789 value" );
+}
 
 
 void main()
 {
-    HashTablePut( 123, "Hello World" );
-    HashTablePut( 567, "Goodbye Mars" );
-    HashTablePut( 789, "Is that Jupiter?" );
-
-    DPRINTF("%s\n", (char*)HashTableGet( 567, "!!" ) );
-    DPRINTF("%s\n", (char*)HashTableGet( 123, "!!" ) );
-    DPRINTF("%s\n", (char*)HashTableGet( 789, "!!" ) );
+    AddTest( "Test1", Test1 );
+    RunTests( "HashTable tests" );
 }
 
 
