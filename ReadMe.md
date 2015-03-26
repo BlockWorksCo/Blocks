@@ -2,6 +2,13 @@
 
 BlockWorks 
 ----------
+Blocks is a set of small, finey crafted, composable blocks for embedded systems. It is intended that these blocks be
+picked and modified as appropriate.
+Broadly, the areas that are covered are:
+- Abstractions and softwae implementations of bus drivers and commnications devices, i.e. I2C, SPI, UART, CAN.
+- Common storage structures; Logging, KeyValueStore.
+- State Machine and event dispatch mechanism; EventQueue, *Events.
+- Test running and reporting mechanism.
 
 Blocks
 ------
@@ -39,6 +46,7 @@ Blocks
 - HART;
 - NMEA;
 - PPP;
+- GPIB;
 
 - UnitTest;
 
