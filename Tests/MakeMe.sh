@@ -8,4 +8,5 @@ gcc -std=c99 -o I2CTests -I../ I2CTests.c ../BlockedEvents.c ../PredicatedEvents
 
 gcc -std=c99 -o UARTTests -I../ UARTTests.c ../BlockedEvents.c ../PredicatedEvents.c ../TimedEvents.c ../EventQueue.c ../Utilities.c ../UARTTransmitter.c ../UARTReceiver.c
 
+gcc -std=c99 -o HashTableTests -I../ HashTableTests.c ../Utilities.c
 

@@ -14,6 +14,7 @@ Blocks
 ------
 
 - Queue; Multipurpose, static queue.
+- Hash Table.
 
 - EventQueue; General purpose function call queue.
 - BlockedEvents;

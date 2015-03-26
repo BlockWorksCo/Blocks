@@ -7,10 +7,14 @@
 
 
 #include "UARTReceiver.h"
+#include "Utilities.h"
 
 
+PRIVATE bool    rxState             = false;
+PRIVATE bool    rxDriven            = false;
+PRIVATE uint8_t state               = 0;
+PRIVATE uint8_t byteBeingReceived   = 0x00;
 
-bool rxState    = false;
 
 void SET_RX()
 {
@@ -43,7 +47,7 @@ void uartRxISR()
         // Start bit.
         //
         FLOAT_RX();
-        CLEAR_TX();
+        //CLEAR_TX();
     }
     else if( (state>=1) && (state<9) )
     {
@@ -52,13 +56,13 @@ void uartRxISR()
         //
         // data bits
         //
-        if( (byteToTransmit&(1<<bitNumber)) != 0)
+        if( (byteBeingReceived&(1<<bitNumber)) != 0)
         {
-            SET_TX();
+            //SET_TX();
         }
         else
         {
-            CLEAR_TX();
+            //CLEAR_TX();
         }
     }
     else if( state == 9 )
@@ -66,7 +70,7 @@ void uartRxISR()
         //
         // Stop bit.
         //
-        SET_TX();
+        //SET_TX();
     }
 
     state++;    
