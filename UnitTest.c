@@ -76,7 +76,7 @@ void RunTests( char* suiteName )
         {
             DPRINTF("\t<Test Name=\"%s\" >\n", testTable[i].name );
             testTable[i].fn();
-            DPRINTF("\t</TestSuite>\r\n");
+            DPRINTF("\t</Test>\r\n");
         }
     }
     DPRINTF("</TestSuite>\r\n");
