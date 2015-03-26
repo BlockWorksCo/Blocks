@@ -6,10 +6,19 @@
 //
 
 #include "HashTable.h"
+#include "Utilities.h"
+
 
 
 void main()
 {
+    HashTablePut( 123, "Hello World" );
+    HashTablePut( 567, "Goodbye Mars" );
+    HashTablePut( 789, "Is that Jupiter?" );
+
+    DPRINTF("%s\n", (char*)HashTableGet( 567, "!!" ) );
+    DPRINTF("%s\n", (char*)HashTableGet( 123, "!!" ) );
+    DPRINTF("%s\n", (char*)HashTableGet( 789, "!!" ) );
 }
 
 

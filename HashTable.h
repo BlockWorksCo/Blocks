@@ -23,12 +23,7 @@
 //
 //
 //
-typedef struct
-{
-    uint32_t    a;
-    uint32_t    b;
-
-} HashTableValue;
+typedef void  (*HashTableValue);
 
 //
 //
@@ -48,7 +43,7 @@ typedef struct
 
 
 void HashTablePut( HashTableKey key, HashTableValue value );
-HashTableValue HashTableGet( HashTableKey key );
+HashTableValue HashTableGet( HashTableKey key, HashTableValue failValue );
 
 
 
