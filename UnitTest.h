@@ -28,7 +28,7 @@ typedef void (*TestFunction)();
 void AddTest( char* name, TestFunction fn );
 void RunTests( char* suiteName );
 
-void AssertEqual( bool test, char* message );
+void Assert( bool test, char* message );
 
 
 #endif

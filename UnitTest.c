@@ -47,7 +47,7 @@ void AddTest( char* name, TestFunction fn )
 
 
 
-void AssertEqual( bool test, char* message )
+void Assert( bool test, char* message )
 {
     if( test == false )
     {
