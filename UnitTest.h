@@ -13,8 +13,11 @@
 
 #include "Platform.h"
 
-#define MAX_TESTS           (16)
+#define MAX_TESTS           (128)
 
+
+
+#define TEST_ASSERT( test , message );  		Assert( test, message, __FILE__, __LINE__ )
 
 //
 //
@@ -27,8 +30,9 @@ typedef void (*TestFunction)();
 //
 void AddTest( char* name, TestFunction fn );
 void RunTests( char* suiteName );
+void UnitTestResultPrintf( char* format, ...);
 
-void Assert( bool test, char* message );
+void Assert( bool test, char* message, char* fileName, uint32_t lineNumber );
 
 
 #endif
