@@ -29,3 +29,23 @@ void KeyValueStoreWritten( uint32_t key )
     EraseFileBlock( 1, 0, KeyValueStoreErased );
 }
 
+bool KeyValueValidate( Key key, void* _value )
+{
+    bool    returnValue     = false;
+
+    switch( key )
+    {
+        case Value1:
+            uint32_t*   value   = (uint32_t*)_value;
+            if( (*value >= 0) && (*value < 10) )
+            {
+                returnValue     = true;
+            }
+
+        default:
+            PANIC();
+            break;
+    }
+
+    return returnValue;
+}

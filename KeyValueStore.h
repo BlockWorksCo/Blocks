@@ -15,7 +15,7 @@
 
 #define DECLARE_KEY_VALUE_STORAGE( type, name )     type name##Storage
 #define DECLARE_KEY( name )                         name = offsetof( KeyValueData, name##Storage )
-#define SET_KEY_VALUE( key, value )                 keyValueData.key##Storage = value;KeyValueStoreWritten(key)
+#define SET_KEY_VALUE( key, value )                 if(KeyValueValidate(key) == true) keyValueData.key##Storage = value;KeyValueStoreWritten(key)
 #define GET_KEY_VALUE( key )                        keyValueData.key##Storage 
 
 typedef struct
@@ -44,8 +44,8 @@ typedef enum
 } Key;
 
 
-void KeyValueStoreWritten( uint32_t key );
-
+void KeyValueStoreWritten( Key key );
+bool KeyValueValidate( Key key);
 
 #endif
 

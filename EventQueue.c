@@ -13,7 +13,8 @@
 #include "Queue.h"
 #include "EventQueue.h"
 
-DECLARE_QUEUE( HandlerQueue, Handler, 16);
+DECLARE_QUEUE( HandlerQueue,            Handler, 16);
+DECLARE_QUEUE( InterruptHandlerQueue,   Handler, 16);
 
 
 void Call( Handler handler )
@@ -22,19 +23,36 @@ void Call( Handler handler )
 }
 
 
+void CallFromInterrupt( Handler handler )
+{
+    InterruptHandlerQueuePut( handler );
+}
+
+
 void DispatchHandlers()
 {
     Handler     handler;
+    bool        noEventsLeftToProcess;
 
     do
     {
+        noEventsLeftToProcess   = true;
+
         handler = HandlerQueueGet( 0 );
         if( handler != 0 )
         {
             handler();
+            noEventsLeftToProcess   = false;
         }
 
-    } while( handler != 0 );
+        handler = InterruptHandlerQueueGet( 0 );
+        if( handler != 0 )
+        {
+            handler();
+            noEventsLeftToProcess   = false;
+        }
+
+    } while( noEventsLeftToProcess == false );
 }
 
 

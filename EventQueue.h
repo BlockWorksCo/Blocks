@@ -18,6 +18,8 @@ typedef void (*Handler)();
 
 
 void Call( Handler handler );
+void CallFromInterrupt( Handler handler );
+
 void DispatchHandlers();
 
 #endif
