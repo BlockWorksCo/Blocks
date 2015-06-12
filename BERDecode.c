@@ -73,11 +73,11 @@ typedef enum
 //
 //
 //
-typedef struct
+typedef struct _BERDecodeContext
 {
     uint8_t*    stream;
 
-    void        (*handlePrimitive)(BERClass, BERContent, BERTag);
+    void        (*handlePrimitive)( struct _BERDecodeContext*, BERClass, BERContent, BERTag);
 
     void*       userContext;
 
@@ -95,8 +95,20 @@ void berDecode( BERDecodeContext* context )
     BERTag      tagType        = (BERTag)     ((context->stream[0] & 0x1f) >> 5);
 
 
-    context->handlePrimitive( classType, contentType, tagType );
+    context->handlePrimitive( context, classType, contentType, tagType );
 
+}
+
+
+
+
+
+
+//
+//
+//
+void handlePrimitive( struct _BERDecodeContext* context, BERClass classType, BERContent contentType, BERTag tagType)
+{
     switch( classType )
     {
         case Universal:
@@ -126,19 +138,6 @@ void berDecode( BERDecodeContext* context )
         default:
             break;
     }
-
-}
-
-
-
-
-
-
-//
-//
-//
-void handlePrimitive(BERClass classType, BERContent contentType, BERTag tagType)
-{
 
 }
 
