@@ -79,7 +79,7 @@ typedef struct _BERDecodeContext
 {
     uint8_t*    stream;
 
-    void        (*handlePrimitive)( struct _BERDecodeContext*, BERClass, BERContent, BERTag);
+    void        (*handlePrimitive)( struct _BERDecodeContext*, BERClass, BERContent, BERTag, uint8_t*, uint32_t);
 
     void*       userContext;
 
@@ -97,6 +97,7 @@ void berDecode( BERDecodeContext* context )
     BERTag      tagType                 = (BERTag)     ((context->stream[0] & 0x1f) >> 5);
     uint8_t     lengthByte              = context->stream[1];
     uint32_t    numberOfBytesInContent  = 0;
+    uint8_t*    content                 = 0;
 
     if(lengthByte&0x80 == 0)
     {
@@ -119,18 +120,22 @@ void berDecode( BERDecodeContext* context )
 
             case 1:
                 numberOfBytesInContent  = ((uint32_t)context->stream[2]);
+                content                 = &context->stream[3];
                 break;
 
             case 2:
                 numberOfBytesInContent  = ((uint32_t)context->stream[2])<<8 | ((uint32_t)context->stream[3]);
+                content                 = &context->stream[4];
                 break;
 
             case 3:
                 numberOfBytesInContent  = ((uint32_t)context->stream[2])<<16 | ((uint32_t)context->stream[3])<<8 | ((uint32_t)context->stream[4]);
+                content                 = &context->stream[5];
                 break;
 
             case 4:
                 numberOfBytesInContent  = ((uint32_t)context->stream[2])<<24 | ((uint32_t)context->stream[3])<<16 | ((uint32_t)context->stream[4])<<8 | ((uint32_t)context->stream[5]);
+                content                 = &context->stream[6];
                 break;
 
             default:
@@ -139,9 +144,10 @@ void berDecode( BERDecodeContext* context )
         }
     }
 
-
-    context->handlePrimitive( context, classType, contentType, tagType );
-
+    //
+    //
+    //
+    context->handlePrimitive( context, classType, contentType, tagType, content, numberOfBytesInContent );
 }
 
 
@@ -152,7 +158,7 @@ void berDecode( BERDecodeContext* context )
 //
 //
 //
-void handlePrimitive( struct _BERDecodeContext* context, BERClass classType, BERContent contentType, BERTag tagType)
+void handlePrimitive( struct _BERDecodeContext* context, BERClass classType, BERContent contentType, BERTag tagType, uint8_t* content, uint32_t numberOfBytesInContent )
 {
     switch( classType )
     {
