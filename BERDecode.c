@@ -5,7 +5,7 @@
 // Written by Steve Tickle <Steve@BlockWorks.co>, September 2014.
 //
 
-
+#include "Platform.h"
 
 //
 //
@@ -35,54 +35,60 @@ typedef enum
 //
 typedef enum
 {
-EndOfContent        P   0   0
-BOOLEAN             P   1   1
-INTEGER             P   2   2
-BITSTRING           P/C 3   3
-OCTETSTRING         P/C 4   4
-NULL                P   5   5
-OBJECTIDENTIFIER    P   6   6
-ObjectDescriptor    P/C 7   7
-EXTERNAL            C   8   8
-REAL                P   9   9
-ENUMERATED          P   10  A
-EMBEDDED PDV        C   11  B
-UTF8String          P/C 12  C
-RELATIVE-OID        P   13  D
-(reserved)          -   14  E
-(reserved)          -   15  F
-SEQUENCEOF          C   16  10
-SETOF               C   17  11
-NumericString       P/C 18  12
-PrintableString     P/C 19  13
-T61String           P/C 20  14
-VideotexString      P/C 21  15
-IA5String           P/C 22  16
-UTCTime             P/C 23  17
-GeneralizedTime     P/C 24  18
-GraphicString       P/C 25  19
-VisibleString       P/C 26  1A
-GeneralString       P/C 27  1B
-UniversalString     P/C 28  1C
-CHARACTERSTRING     P/C 29  1D
-BMPString           P/C 30  1E
-LongForm            -   31  1F
+    EndOfContent        = 0,
+    BOOLEAN             = 1,
+    INTEGER             = 2,
+    BITSTRING           = 3,
+    OCTETSTRING         = 4,
+    NULLTag             = 5,
+    OBJECTIDENTIFIER    = 6,
+    ObjectDescriptor    = 7,
+    EXTERNAL            = 8,
+    REAL                = 9,
+    ENUMERATED          = 10,
+    EMBEDDEDPDV         = 11,
+    UTF8String          = 12,
+    RELATIVEOID         = 13,
+    SEQUENCEOF          = 16,
+    SETOF               = 17,
+    NumericString       = 18,
+    PrintableString     = 19,
+    T61String           = 20,
+    VideotexString      = 21,
+    IA5String           = 22,
+    UTCTime             = 23,
+    GeneralizedTime     = 24,
+    GraphicString       = 25,
+    VisibleString       = 26,
+    GeneralString       = 27,
+    UniversalString     = 28,
+    CHARACTERSTRING     = 29,
+    BMPString           = 30,
+    LongForm            = 31,
 
 } BERTag;
 
 
 
-
-
-
 //
 //
 //
-void berDecode(uint8_t* stream)
+typedef struct
 {
-    BERClass    classType      = (BERClass)   ((stream[0] & 0xc0) >> 6);
-    BERContent  contentType    = (BERContent) ((stream[0] & 0x20) >> 5);
-    BERTag      tagType        = (BERTag)     ((stream[0] & 0x1f) >> 5);
+    uint8_t*    stream;
+
+} BERDecodeContext;
+
+
+
+//
+//
+//
+void berDecode( BERDecodeContext* context )
+{
+    BERClass    classType      = (BERClass)   ((context->stream[0] & 0xc0) >> 6);
+    BERContent  contentType    = (BERContent) ((context->stream[0] & 0x20) >> 5);
+    BERTag      tagType        = (BERTag)     ((context->stream[0] & 0x1f) >> 5);
 
     switch( classType )
     {
@@ -121,11 +127,12 @@ void berDecode(uint8_t* stream)
 
 
 
-void Test1()
+void main()
 {
-    uint8_t     stream1[]   = {0x01, 0x02, 0x03, 0x04};
+    uint8_t             stream1[]   = {0x01, 0x02, 0x03, 0x04};
+    BERDecodeContext    context     = {.stream=&stream1[0]};
 
-    berDecode( &stream1[0] );
+    berDecode( &context );
 }
 
 
