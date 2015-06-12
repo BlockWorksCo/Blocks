@@ -77,6 +77,10 @@ typedef struct
 {
     uint8_t*    stream;
 
+    void        (*handlePrimitive)(BERClass, BERContent, BERTag);
+
+    void*       userContext;
+
 } BERDecodeContext;
 
 
@@ -89,6 +93,9 @@ void berDecode( BERDecodeContext* context )
     BERClass    classType      = (BERClass)   ((context->stream[0] & 0xc0) >> 6);
     BERContent  contentType    = (BERContent) ((context->stream[0] & 0x20) >> 5);
     BERTag      tagType        = (BERTag)     ((context->stream[0] & 0x1f) >> 5);
+
+
+    context->handlePrimitive( classType, contentType, tagType );
 
     switch( classType )
     {
@@ -127,10 +134,26 @@ void berDecode( BERDecodeContext* context )
 
 
 
+//
+//
+//
+void handlePrimitive(BERClass classType, BERContent contentType, BERTag tagType)
+{
+
+}
+
+
+
+
 void main()
 {
     uint8_t             stream1[]   = {0x01, 0x02, 0x03, 0x04};
-    BERDecodeContext    context     = {.stream=&stream1[0]};
+    BERDecodeContext    context     = 
+    {
+        .stream             = &stream1[0],
+        .handlePrimitive    = handlePrimitive,
+        .userContext        = 0,
+    };
 
     berDecode( &context );
 }
