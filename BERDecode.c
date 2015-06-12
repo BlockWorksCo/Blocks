@@ -6,6 +6,8 @@
 //
 
 #include "Platform.h"
+#include "Utilities.h"
+
 
 //
 //
@@ -90,9 +92,52 @@ typedef struct _BERDecodeContext
 //
 void berDecode( BERDecodeContext* context )
 {
-    BERClass    classType      = (BERClass)   ((context->stream[0] & 0xc0) >> 6);
-    BERContent  contentType    = (BERContent) ((context->stream[0] & 0x20) >> 5);
-    BERTag      tagType        = (BERTag)     ((context->stream[0] & 0x1f) >> 5);
+    BERClass    classType               = (BERClass)   ((context->stream[0] & 0xc0) >> 6);
+    BERContent  contentType             = (BERContent) ((context->stream[0] & 0x20) >> 5);
+    BERTag      tagType                 = (BERTag)     ((context->stream[0] & 0x1f) >> 5);
+    uint8_t     lengthByte              = context->stream[1];
+    uint32_t    numberOfBytesInContent  = 0;
+
+    if(lengthByte&0x80 == 0)
+    {
+        //
+        // Short form.
+        //
+        numberOfBytesInContent  = lengthByte;
+    }
+    else
+    {
+        //
+        // Long form.
+        //
+        uint8_t     numberOfBytesInLengthField  = lengthByte & 0x7f;
+        switch(numberOfBytesInLengthField)
+        {
+            case 0:
+                PANIC();    // Indefinite form not supported.
+                break;
+
+            case 1:
+                numberOfBytesInContent  = ((uint32_t)context->stream[2]);
+                break;
+
+            case 2:
+                numberOfBytesInContent  = ((uint32_t)context->stream[2])<<8 | ((uint32_t)context->stream[3]);
+                break;
+
+            case 3:
+                numberOfBytesInContent  = ((uint32_t)context->stream[2])<<16 | ((uint32_t)context->stream[3])<<8 | ((uint32_t)context->stream[4]);
+                break;
+
+            case 4:
+                numberOfBytesInContent  = ((uint32_t)context->stream[2])<<24 | ((uint32_t)context->stream[3])<<16 | ((uint32_t)context->stream[4])<<8 | ((uint32_t)context->stream[5]);
+                break;
+
+            default:
+                PANIC();
+                break;
+        }
+    }
 
 
     context->handlePrimitive( context, classType, contentType, tagType );
