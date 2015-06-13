@@ -99,12 +99,13 @@ void berDecode( BERDecodeContext* context )
     uint32_t    numberOfBytesInContent  = 0;
     uint8_t*    content                 = 0;
 
-    if(lengthByte&0x80 == 0)
+    if( (lengthByte&0x80) == 0)
     {
         //
         // Short form.
         //
         numberOfBytesInContent  = lengthByte;
+        content                 = &context->stream[2];
     }
     else
     {
@@ -155,11 +156,31 @@ void berDecode( BERDecodeContext* context )
 
 
 
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+
+
 //
 //
 //
 void handlePrimitive( struct _BERDecodeContext* context, BERClass classType, BERContent contentType, BERTag tagType, uint8_t* content, uint32_t numberOfBytesInContent )
 {
+    printf("classType=%02x contentType=%02x tagType=%02x",classType, contentType, tagType );
+    for(uint32_t i=0; i<numberOfBytesInContent; i++)
+    {
+        printf("(%02x) ", content[i] );
+    }
+    printf("\n");
+
     switch( classType )
     {
         case Universal:
@@ -197,7 +218,11 @@ void handlePrimitive( struct _BERDecodeContext* context, BERClass classType, BER
 
 void main()
 {
-    uint8_t             stream1[]   = {0x01, 0x02, 0x03, 0x04};
+    FILE*       inFile          = fopen("Tests/Example1.ber","rb");
+    uint8_t     stream1[128]    = {0};
+    fread( &stream1[0], 1,sizeof(stream1), inFile );
+
+    //uint8_t             stream1[]   = {0x01, 0x02, 0x03, 0x04};
     BERDecodeContext    context     = 
     {
         .stream             = &stream1[0],
