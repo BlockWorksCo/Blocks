@@ -80,6 +80,7 @@ typedef struct _BERDecodeContext
     uint8_t*    stream;
 
     void        (*handlePrimitive)( struct _BERDecodeContext*, BERClass, BERContent, BERTag, uint8_t*, uint32_t);
+    void        (*handleConstruction)( struct _BERDecodeContext*, BERClass, BERContent, BERTag, uint8_t*, uint32_t);
 
     void*       userContext;
 
@@ -145,10 +146,24 @@ void berDecode( BERDecodeContext* context )
         }
     }
 
+
     //
     //
     //
-    context->handlePrimitive( context, classType, contentType, tagType, content, numberOfBytesInContent );
+    switch( contentType )
+    {
+        case Primitive:
+            context->handlePrimitive( context, classType, contentType, tagType, content, numberOfBytesInContent );
+            break;
+            
+        case Constructed:
+            context->handleConstruction( context, classType, contentType, tagType, content, numberOfBytesInContent );
+            break;
+            
+        default:
+            break;
+    }
+
 }
 
 
@@ -199,12 +214,33 @@ void handlePrimitive( struct _BERDecodeContext* context, BERClass classType, BER
             break;
     }
 
-    switch( contentType )
+}
+
+
+//
+//
+//
+void handleConstruction( struct _BERDecodeContext* context, BERClass classType, BERContent contentType, BERTag tagType, uint8_t* content, uint32_t numberOfBytesInContent )
+{
+    printf("classType=%02x contentType=%02x tagType=%02x",classType, contentType, tagType );
+    for(uint32_t i=0; i<numberOfBytesInContent; i++)
     {
-        case Primitive:
+        printf("(%02x) ", content[i] );
+    }
+    printf("\n");
+
+    switch( classType )
+    {
+        case Universal:
             break;
             
-        case Constructed:
+        case Application:
+            break;
+            
+        case ContextSpecific:
+            break;
+            
+        case Private:
             break;
             
         default:
@@ -227,6 +263,7 @@ void main()
     {
         .stream             = &stream1[0],
         .handlePrimitive    = handlePrimitive,
+        .handleConstruction = handleConstruction,
         .userContext        = 0,
     };
 
